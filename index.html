@@ -3,76 +3,99 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Traveling to Alexander's Portfolio...</title>
+    <title>Warping to Alexander's Portfolio...</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* The Galaxy Nebula Effect */
         body {
-            background: radial-gradient(circle at bottom, #1a0b2e 0%, #090a0f 70%, #000000 100%);
+            margin: 0;
+            background: #020617; /* Deepest space blue */
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             height: 100vh;
+            perspective: 1000px;
         }
 
-        /* Pure CSS Star Field Generator */
-        #stars {
-            width: 1px;
-            height: 1px;
-            background: transparent;
-            /* Generating 100+ stars using box-shadow */
-            box-shadow: 10vw 20vh #fff, 35vw 45vh #fff, 80vw 10vh #fff, 15vw 85vh #fff, 55vw 30vh #fff, 90vw 70vh #fff, 25vw 15vh #fff, 75vw 90vh #fff, 40vw 60vh #fff, 65vw 20vh #fff, 5vw 40vh #fff, 50vw 80vh #fff, 20vw 55vh #fff, 85vw 35vh #fff, 12vw 12vh #fff, 95vw 95vh #fff;
-            animation: stars-move 100s linear infinite;
-        }
-
-        /* Twinkling Animation */
-        .twinkle {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: transparent;
-            box-shadow: 2vw 10vh #ffffff55, 45vw 30vh #ffffff88, 70vw 55vh #ffffff44;
-            animation: blink 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes blink {
-            0% { opacity: 0.3; }
-            100% { opacity: 1; }
-        }
-
+        /* The Nebula Glow */
         .nebula {
             position: absolute;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(107, 33, 168, 0.15) 0%, rgba(0,0,0,0) 70%);
-            filter: blur(80px);
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(76, 29, 149, 0.15) 0%, 
+                rgba(30, 58, 138, 0.1) 30%, 
+                transparent 70%);
+            filter: blur(60px);
+            z-index: 1;
+        }
+
+        /* Star Generator Functionality */
+        .star-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 2;
+        }
+
+        /* We create stars using multiple box-shadows on a tiny 1x1 div */
+        .stars-small {
+            width: 1px; height: 1px;
+            background: white;
+            box-shadow: 10vw 20vh #fff, 30vw 50vh #fff, 70vw 80vh #fff, 90vw 10vh #fff, 40vw 30vh #fff, 15vw 75vh #fff, 60vw 40vh #fff, 80vw 60vh #fff, 25vw 90vh #fff, 55vw 15vh #fff, 5vw 45vh #fff, 45vw 85vh #fff, 12vw 12vh #fff, 85vw 35vh #fff, 95vw 95vh #fff, 33vw 66vh #fff;
+            animation: drift 120s linear infinite;
+        }
+
+        .stars-medium {
+            width: 2px; height: 2px;
+            background: white;
+            box-shadow: 15vw 25vh #fff, 35vw 55vh #fff, 75vw 85vh #fff, 95vw 15vh #fff, 45vw 35vh #fff, 20vw 80vh #fff, 65vw 45vh #fff, 85vw 65vh #fff;
+            animation: drift 80s linear infinite;
+            opacity: 0.7;
+        }
+
+        .stars-large {
+            width: 3px; height: 3px;
+            background: #fff;
             border-radius: 50%;
-            bottom: -100px;
-            right: -100px;
+            box-shadow: 20vw 30vh #fff, 50vw 60vh #fff, 80vw 20vh #fff, 10vw 90vh #fff, 70vw 50vh #fff;
+            animation: drift 40s linear infinite;
+            filter: blur(1px);
+        }
+
+        @keyframes drift {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-1000px); }
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
         }
     </style>
 </head>
 
-<body class="flex items-center justify-center text-white font-sans">
-    <div id="stars"></div>
-    <div class="twinkle"></div>
+<body class="text-white font-sans">
     <div class="nebula"></div>
+    
+    <div class="star-layer stars-small"></div>
+    <div class="star-layer stars-medium"></div>
+    <div class="star-layer stars-large"></div>
 
-    <div class="z-10 text-center px-6">
-        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-            Warping to New Portfolio
+    <div class="content p-8 max-w-lg">
+        <h1 class="text-5xl font-extrabold mb-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-blue-300 via-white to-purple-400">
+            Initiating Warp...
         </h1>
         
-        <p class="text-gray-400 text-lg mb-8">
-            Engaging hyperdrive in... 
-            <span id="timer" class="text-white font-mono text-2xl font-bold ml-2">5</span>
+        <p class="text-blue-200/80 text-xl mb-12">
+            Taking you to the new home of <span class="text-white font-semibold">Alexander Li</span> in... 
+            <span id="timer" class="block text-6xl font-mono font-black mt-2 text-white italic">5</span>
         </p>
 
-        <div class="inline-block p-[2px] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
-            <a href="http://alexanderli.rf.gd" class="block bg-black hover:bg-opacity-80 transition px-8 py-3 rounded-full text-sm font-medium">
-                Jump Now &rarr;
-            </a>
-        </div>
+        <a href="http://alexanderli.rf.gd" 
+           class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-blue-600 rounded-xl hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
+            Jump Manually →
+        </a>
     </div>
 
     <script>
