@@ -4,113 +4,187 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Warping to Alexander's Portfolio...</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
+        /* --- BASE RESET --- */
+        * {
+            box-sizing: border-box;
             margin: 0;
-            background: radial-gradient(circle at center, #0a0f1d 0%, #020617 100%);
-            overflow: hidden;
+            padding: 0;
+        }
+
+        body {
+            background-color: #030613; /* Deep space color */
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden; 
             height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100vw;
+            position: relative;
         }
 
-        /* High-Density Star Field Function */
-        /* We use multiple box-shadows to create "clouds" of stars */
-        .star-base {
+        /* --- BULLETPROOF STARFIELD --- */
+        /* By using a repeating background pattern, we guarantee high density */
+        .stars-container {
             position: absolute;
-            background: white;
-            border-radius: 50%;
-            opacity: 0.5;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: 1;
         }
 
-        /* Layer 1: Tiny distant dust (Fastest) */
-        .stars-dense {
-            width: 1px; height: 1px;
-            box-shadow: 
-                10vw 10vh #fff, 20vw 80vh #fff, 35vw 45vh #fff, 50vw 10vh #fff, 65vw 90vh #fff, 80vw 30vh #fff, 95vw 70vh #fff,
-                5vw 25vh #fff, 15vw 55vh #fff, 25vw 85vh #fff, 40vw 15vh #fff, 55vw 65vh #fff, 70vw 20vh #fff, 85vw 50vh #fff,
-                12vw 33vh #fff, 22vw 66vh #fff, 32vw 12vh #fff, 42vw 88vh #fff, 62vw 33vh #fff, 72vw 77vh #fff, 82vw 11vh #fff,
-                /* Double the density */
-                18vw 42vh #fff, 28vw 12vh #fff, 38vw 92vh #fff, 48vw 52vh #fff, 58vw 22vh #fff, 68vw 82vh #fff, 78vw 42vh #fff,
-                3vw 97vh #fff, 13vw 47vh #fff, 23vw 77vh #fff, 33vw 17vh #fff, 43vw 67vh #fff, 53vw 27vh #fff, 63vw 87vh #fff;
-            animation: warp 60s linear infinite;
+        .star-layer {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-repeat: repeat;
+        }
+
+        /* Layer 1: Super dense, tiny distant stars */
+        .stars-small {
+            background-image: 
+                radial-gradient(1px 1px at 10% 10%, #fff, transparent),
+                radial-gradient(1px 1px at 30% 40%, #fff, transparent),
+                radial-gradient(1px 1px at 50% 80%, #fff, transparent),
+                radial-gradient(1px 1px at 70% 20%, #fff, transparent),
+                radial-gradient(1px 1px at 90% 60%, #fff, transparent),
+                radial-gradient(1px 1px at 20% 90%, #fff, transparent),
+                radial-gradient(1px 1px at 60% 50%, #fff, transparent),
+                radial-gradient(1px 1px at 80% 80%, #fff, transparent);
+            background-size: 150px 150px;
+            animation: move-stars 40s linear infinite;
         }
 
         /* Layer 2: Medium stars */
         .stars-medium {
-            width: 2px; height: 2px;
-            box-shadow: 
-                5vw 5vh #fff, 25vw 25vh #fff, 45vw 45vh #fff, 65vw 65vh #fff, 85vw 85vh #fff,
-                15vw 75vh #fff, 35vw 55vh #fff, 55vw 35vh #fff, 75vw 15vh #fff, 95vw 5vh #fff,
-                50vw 50vh #fff, 10vw 90vh #fff, 90vw 10vh #fff, 30vw 70vh #fff, 70vw 30vh #fff;
-            animation: warp 90s linear infinite;
+            background-image: 
+                radial-gradient(2px 2px at 15% 25%, #fff, transparent),
+                radial-gradient(2px 2px at 45% 65%, #fff, transparent),
+                radial-gradient(2px 2px at 75% 15%, #fff, transparent),
+                radial-gradient(2px 2px at 85% 85%, #fff, transparent),
+                radial-gradient(2px 2px at 35% 95%, #fff, transparent);
+            background-size: 250px 250px;
+            animation: move-stars 30s linear infinite;
             opacity: 0.8;
         }
 
-        /* Nebula Clouds */
+        /* Layer 3: Large, fast stars */
+        .stars-large {
+            background-image: 
+                radial-gradient(3px 3px at 25% 15%, #fff, transparent),
+                radial-gradient(3px 3px at 65% 85%, #fff, transparent),
+                radial-gradient(3px 3px at 85% 45%, #fff, transparent);
+            background-size: 350px 350px;
+            animation: move-stars 20s linear infinite;
+            opacity: 0.9;
+        }
+
+        /* Moving the background texture gives the illusion of flying */
+        @keyframes move-stars {
+            from { background-position: 0 0; }
+            to { background-position: 0 1000px; }
+        }
+
+        /* --- NEBULA GLOW --- */
         .nebula {
             position: absolute;
-            width: 800px; height: 800px;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.05) 40%, transparent 70%);
-            filter: blur(100px);
-            z-index: 0;
-            animation: pulse 10s ease-in-out infinite alternate;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, rgba(67, 30, 140, 0.25) 0%, transparent 60%);
+            z-index: 2;
         }
 
-        @keyframes warp {
-            from { transform: translateY(0); }
-            to { transform: translateY(-100vh); }
+        /* --- CONTENT & EXPLICIT MARGINS --- */
+        .content {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            width: 100%;
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); opacity: 0.5; }
-            100% { transform: scale(1.2); opacity: 0.8; }
+        /* HUGE vertical margins strictly enforced here */
+        .header-section {
+            margin-bottom: 90px; /* Forces huge gap below title */
         }
 
-        .content-container {
-            z-index: 20;
-            display: flex;
-            flex-direction: column;
-            gap: 4rem; /* Massive vertical margin between sections */
+        .title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: #ffffff;
+            margin-bottom: 15px; 
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #93c5fd; 
+            letter-spacing: 2px;
+        }
+
+        .timer-section {
+            margin-bottom: 90px; /* Forces huge gap below timer */
+        }
+
+        .timer-number {
+            font-size: 8rem;
+            font-weight: bold;
+            font-family: monospace;
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+        }
+
+        .timer-text {
+            font-size: 1.1rem;
+            color: #a3a3a3;
+            font-style: italic;
+            margin-top: 15px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #1d4ed8, #6d28d9);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 10px 30px rgba(29, 78, 216, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(29, 78, 216, 0.6);
         }
     </style>
 </head>
+<body>
 
-<body class="text-white">
-    <div class="nebula" style="top: -10%; left: -10%;"></div>
-    <div class="nebula" style="bottom: -10%; right: -10%;"></div>
-    <div class="star-base stars-dense"></div>
-    <div class="star-base stars-medium"></div>
+    <div class="stars-container">
+        <div class="star-layer stars-small"></div>
+        <div class="star-layer stars-medium"></div>
+        <div class="star-layer stars-large"></div>
+        <div class="nebula"></div>
+    </div>
 
-    <div class="content-container text-center px-4">
+    <div class="content">
         
-        <header>
-            <h1 class="text-6xl md:text-7xl font-black tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-b from-white to-blue-400">
-                Warp Drive
-            </h1>
-            <p class="mt-8 text-blue-300 text-lg tracking-[0.3em] font-light">
-                TRANSITIONING TO NEW PORTFOLIO
-            </p>
-        </header>
+        <div class="header-section">
+            <h1 class="title">Warp Drive</h1>
+            <p class="subtitle">TRANSITIONING TO NEW PORTFOLIO</p>
+        </div>
 
-        <section class="py-12">
-            <div id="timer" class="text-8xl md:text-9xl font-mono font-bold text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-                5
-            </div>
-            <p class="mt-6 text-gray-400 italic">Seconds remaining until jump...</p>
-        </section>
+        <div class="timer-section">
+            <div id="timer" class="timer-number">5</div>
+            <p class="timer-text">Seconds remaining until jump...</p>
+        </div>
 
-        <footer>
-            <div class="relative inline-block group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
-                <a href="http://alexanderli.rf.gd" class="relative px-10 py-5 bg-black rounded-lg leading-none flex items-center divide-x divide-gray-600">
-                    <span class="pr-6 text-blue-100 text-sm font-bold tracking-widest uppercase">Manual Override</span>
-                    <span class="pl-6 text-indigo-400 group-hover:text-gray-100 transition duration-200">Jump Now &rarr;</span>
-                </a>
-            </div>
-        </footer>
+        <div class="action-section">
+            <a href="http://alexanderli.rf.gd" class="btn">Jump Now &rarr;</a>
+        </div>
 
     </div>
 
