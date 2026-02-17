@@ -1,23 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Redirecting...</title>
+    <title>Redirecting to Portfolio...</title>
     
-    <meta http-equiv="refresh" content="0; url=http://alexanderli.rf.gd" />
-    
+    <style>
+        /* Starry Night Background */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* Simple CSS Stars */
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123163/stars.png') repeat;
+            z-index: 0;
+        }
+
+        .content {
+            z-index: 1;
+            padding: 20px;
+        }
+
+        a {
+            color: #8ed1fc;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #timer {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            color: #ffcc00;
+        }
+    </style>
+
     <script type="text/javascript">
-      window.location.replace("http://alexanderli.rf.gd");
+        let seconds = 5;
+        function countdown() {
+            seconds--;
+            if (seconds <= 0) {
+                window.location.replace("http://alexanderli.rf.gd");
+            } else {
+                document.getElementById("timer").innerHTML = seconds;
+                setTimeout(countdown, 1000);
+            }
+        }
+        window.onload = countdown;
     </script>
-  </head>
+</head>
 
-  <body>
-    <p>
-      Redirecting you to the new portfolio... 
-      <br />
-      <a href="http://alexanderli.rf.gd">Click here if you are not redirected automatically.</a>
-    </p>
-  </body>
+<body>
+    <div class="stars"></div>
+    <div class="content">
+        <h1>Warping to a New Galaxy</h1>
+        <p>Redirecting you to the new portfolio in...</p>
+        <div id="timer">5</div>
+        <br />
+        <p>
+            <a href="http://alexanderli.rf.gd">Click here if you aren't moving fast enough.</a>
+        </p>
+    </div>
+</body>
 </html>
-
