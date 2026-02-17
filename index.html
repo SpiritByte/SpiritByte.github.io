@@ -3,78 +3,91 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Redirecting to Portfolio...</title>
-    
+    <title>Traveling to Alexander's Portfolio...</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Starry Night Background */
+        /* The Galaxy Nebula Effect */
         body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
-            color: white;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: radial-gradient(circle at bottom, #1a0b2e 0%, #090a0f 70%, #000000 100%);
             overflow: hidden;
-            text-align: center;
+            height: 100vh;
         }
 
-        /* Simple CSS Stars */
-        .stars {
+        /* Pure CSS Star Field Generator */
+        #stars {
+            width: 1px;
+            height: 1px;
+            background: transparent;
+            /* Generating 100+ stars using box-shadow */
+            box-shadow: 10vw 20vh #fff, 35vw 45vh #fff, 80vw 10vh #fff, 15vw 85vh #fff, 55vw 30vh #fff, 90vw 70vh #fff, 25vw 15vh #fff, 75vw 90vh #fff, 40vw 60vh #fff, 65vw 20vh #fff, 5vw 40vh #fff, 50vw 80vh #fff, 20vw 55vh #fff, 85vw 35vh #fff, 12vw 12vh #fff, 95vw 95vh #fff;
+            animation: stars-move 100s linear infinite;
+        }
+
+        /* Twinkling Animation */
+        .twinkle {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123163/stars.png') repeat;
-            z-index: 0;
+            background: transparent;
+            box-shadow: 2vw 10vh #ffffff55, 45vw 30vh #ffffff88, 70vw 55vh #ffffff44;
+            animation: blink 3s ease-in-out infinite alternate;
         }
 
-        .content {
-            z-index: 1;
-            padding: 20px;
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            100% { opacity: 1; }
         }
 
-        a {
-            color: #8ed1fc;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        #timer {
-            font-size: 1.5rem;
-            margin-top: 10px;
-            color: #ffcc00;
+        .nebula {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(107, 33, 168, 0.15) 0%, rgba(0,0,0,0) 70%);
+            filter: blur(80px);
+            border-radius: 50%;
+            bottom: -100px;
+            right: -100px;
         }
     </style>
-
-    <script type="text/javascript">
-        let seconds = 5;
-        function countdown() {
-            seconds--;
-            if (seconds <= 0) {
-                window.location.replace("http://alexanderli.rf.gd");
-            } else {
-                document.getElementById("timer").innerHTML = seconds;
-                setTimeout(countdown, 1000);
-            }
-        }
-        window.onload = countdown;
-    </script>
 </head>
 
-<body>
-    <div class="stars"></div>
-    <div class="content">
-        <h1>Warping to a New Galaxy</h1>
-        <p>Redirecting you to the new portfolio in...</p>
-        <div id="timer">5</div>
-        <br />
-        <p>
-            <a href="http://alexanderli.rf.gd">Click here if you aren't moving fast enough.</a>
+<body class="flex items-center justify-center text-white font-sans">
+    <div id="stars"></div>
+    <div class="twinkle"></div>
+    <div class="nebula"></div>
+
+    <div class="z-10 text-center px-6">
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            Warping to New Portfolio
+        </h1>
+        
+        <p class="text-gray-400 text-lg mb-8">
+            Engaging hyperdrive in... 
+            <span id="timer" class="text-white font-mono text-2xl font-bold ml-2">5</span>
         </p>
+
+        <div class="inline-block p-[2px] rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
+            <a href="http://alexanderli.rf.gd" class="block bg-black hover:bg-opacity-80 transition px-8 py-3 rounded-full text-sm font-medium">
+                Jump Now &rarr;
+            </a>
+        </div>
     </div>
+
+    <script>
+        let seconds = 5;
+        const timerDisplay = document.getElementById("timer");
+
+        const interval = setInterval(() => {
+            seconds--;
+            timerDisplay.innerText = seconds;
+            
+            if (seconds <= 0) {
+                clearInterval(interval);
+                window.location.replace("http://alexanderli.rf.gd");
+            }
+        }, 1000);
+    </script>
 </body>
 </html>
