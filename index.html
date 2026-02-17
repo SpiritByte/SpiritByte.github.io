@@ -8,94 +8,110 @@
     <style>
         body {
             margin: 0;
-            background: #020617; /* Deepest space blue */
+            background: radial-gradient(circle at center, #0a0f1d 0%, #020617 100%);
             overflow: hidden;
+            height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            perspective: 1000px;
         }
 
-        /* The Nebula Glow */
-        .nebula {
+        /* High-Density Star Field Function */
+        /* We use multiple box-shadows to create "clouds" of stars */
+        .star-base {
             position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle at 50% 50%, 
-                rgba(76, 29, 149, 0.15) 0%, 
-                rgba(30, 58, 138, 0.1) 30%, 
-                transparent 70%);
-            filter: blur(60px);
-            z-index: 1;
-        }
-
-        /* Star Generator Functionality */
-        .star-layer {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            z-index: 2;
-        }
-
-        /* We create stars using multiple box-shadows on a tiny 1x1 div */
-        .stars-small {
-            width: 1px; height: 1px;
             background: white;
-            box-shadow: 10vw 20vh #fff, 30vw 50vh #fff, 70vw 80vh #fff, 90vw 10vh #fff, 40vw 30vh #fff, 15vw 75vh #fff, 60vw 40vh #fff, 80vw 60vh #fff, 25vw 90vh #fff, 55vw 15vh #fff, 5vw 45vh #fff, 45vw 85vh #fff, 12vw 12vh #fff, 85vw 35vh #fff, 95vw 95vh #fff, 33vw 66vh #fff;
-            animation: drift 120s linear infinite;
+            border-radius: 50%;
+            opacity: 0.5;
         }
 
+        /* Layer 1: Tiny distant dust (Fastest) */
+        .stars-dense {
+            width: 1px; height: 1px;
+            box-shadow: 
+                10vw 10vh #fff, 20vw 80vh #fff, 35vw 45vh #fff, 50vw 10vh #fff, 65vw 90vh #fff, 80vw 30vh #fff, 95vw 70vh #fff,
+                5vw 25vh #fff, 15vw 55vh #fff, 25vw 85vh #fff, 40vw 15vh #fff, 55vw 65vh #fff, 70vw 20vh #fff, 85vw 50vh #fff,
+                12vw 33vh #fff, 22vw 66vh #fff, 32vw 12vh #fff, 42vw 88vh #fff, 62vw 33vh #fff, 72vw 77vh #fff, 82vw 11vh #fff,
+                /* Double the density */
+                18vw 42vh #fff, 28vw 12vh #fff, 38vw 92vh #fff, 48vw 52vh #fff, 58vw 22vh #fff, 68vw 82vh #fff, 78vw 42vh #fff,
+                3vw 97vh #fff, 13vw 47vh #fff, 23vw 77vh #fff, 33vw 17vh #fff, 43vw 67vh #fff, 53vw 27vh #fff, 63vw 87vh #fff;
+            animation: warp 60s linear infinite;
+        }
+
+        /* Layer 2: Medium stars */
         .stars-medium {
             width: 2px; height: 2px;
-            background: white;
-            box-shadow: 15vw 25vh #fff, 35vw 55vh #fff, 75vw 85vh #fff, 95vw 15vh #fff, 45vw 35vh #fff, 20vw 80vh #fff, 65vw 45vh #fff, 85vw 65vh #fff;
-            animation: drift 80s linear infinite;
-            opacity: 0.7;
+            box-shadow: 
+                5vw 5vh #fff, 25vw 25vh #fff, 45vw 45vh #fff, 65vw 65vh #fff, 85vw 85vh #fff,
+                15vw 75vh #fff, 35vw 55vh #fff, 55vw 35vh #fff, 75vw 15vh #fff, 95vw 5vh #fff,
+                50vw 50vh #fff, 10vw 90vh #fff, 90vw 10vh #fff, 30vw 70vh #fff, 70vw 30vh #fff;
+            animation: warp 90s linear infinite;
+            opacity: 0.8;
         }
 
-        .stars-large {
-            width: 3px; height: 3px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 20vw 30vh #fff, 50vw 60vh #fff, 80vw 20vh #fff, 10vw 90vh #fff, 70vw 50vh #fff;
-            animation: drift 40s linear infinite;
-            filter: blur(1px);
+        /* Nebula Clouds */
+        .nebula {
+            position: absolute;
+            width: 800px; height: 800px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.05) 40%, transparent 70%);
+            filter: blur(100px);
+            z-index: 0;
+            animation: pulse 10s ease-in-out infinite alternate;
         }
 
-        @keyframes drift {
-            from { transform: translateY(0px); }
-            to { transform: translateY(-1000px); }
+        @keyframes warp {
+            from { transform: translateY(0); }
+            to { transform: translateY(-100vh); }
         }
 
-        .content {
-            position: relative;
-            z-index: 10;
-            text-align: center;
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .content-container {
+            z-index: 20;
+            display: flex;
+            flex-direction: column;
+            gap: 4rem; /* Massive vertical margin between sections */
         }
     </style>
 </head>
 
-<body class="text-white font-sans">
-    <div class="nebula"></div>
-    
-    <div class="star-layer stars-small"></div>
-    <div class="star-layer stars-medium"></div>
-    <div class="star-layer stars-large"></div>
+<body class="text-white">
+    <div class="nebula" style="top: -10%; left: -10%;"></div>
+    <div class="nebula" style="bottom: -10%; right: -10%;"></div>
+    <div class="star-base stars-dense"></div>
+    <div class="star-base stars-medium"></div>
 
-    <div class="content p-8 max-w-lg">
-        <h1 class="text-5xl font-extrabold mb-4 tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-blue-300 via-white to-purple-400">
-            Initiating Warp...
-        </h1>
+    <div class="content-container text-center px-4">
         
-        <p class="text-blue-200/80 text-xl mb-12">
-            Taking you to the new home of <span class="text-white font-semibold">Alexander Li</span> in... 
-            <span id="timer" class="block text-6xl font-mono font-black mt-2 text-white italic">5</span>
-        </p>
+        <header>
+            <h1 class="text-6xl md:text-7xl font-black tracking-widest uppercase bg-clip-text text-transparent bg-gradient-to-b from-white to-blue-400">
+                Warp Drive
+            </h1>
+            <p class="mt-8 text-blue-300 text-lg tracking-[0.3em] font-light">
+                TRANSITIONING TO NEW PORTFOLIO
+            </p>
+        </header>
 
-        <a href="http://alexanderli.rf.gd" 
-           class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-blue-600 rounded-xl hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-600">
-            Jump Manually →
-        </a>
+        <section class="py-12">
+            <div id="timer" class="text-8xl md:text-9xl font-mono font-bold text-white drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+                5
+            </div>
+            <p class="mt-6 text-gray-400 italic">Seconds remaining until jump...</p>
+        </section>
+
+        <footer>
+            <div class="relative inline-block group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg blur opacity-25 group-hover:opacity-100 transition duration-1000 group-hover:duration-200"></div>
+                <a href="http://alexanderli.rf.gd" class="relative px-10 py-5 bg-black rounded-lg leading-none flex items-center divide-x divide-gray-600">
+                    <span class="pr-6 text-blue-100 text-sm font-bold tracking-widest uppercase">Manual Override</span>
+                    <span class="pl-6 text-indigo-400 group-hover:text-gray-100 transition duration-200">Jump Now &rarr;</span>
+                </a>
+            </div>
+        </footer>
+
     </div>
 
     <script>
